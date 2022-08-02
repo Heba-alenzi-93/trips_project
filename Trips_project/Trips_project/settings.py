@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from datetime import timedelta #from pip install djangorestframework-simplejwt 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,9 @@ SECRET_KEY = 'django-insecure-k8u3eo7=ap1g7o@u9)rz70vk18ipxstldzcw(0v79m4ud1c(ij
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["c2c5-94-129-79-25.eu.ngrok.io"]
+CSRF_TRUSTED_ORIGINS = ["https://c2c5-94-129-79-25.eu.ngrok.io"]
+
 
 
 # Application definition
@@ -37,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'Trips_app',
 ]
 
 MIDDLEWARE = [
@@ -99,7 +104,20 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+    
+}
 
+#from pip install djangorestframework-simplejwt 
+#for login 
+SIMPLE_IWT = {
+    "ACCESS_TOKEN_LIFTIME": timedelta(days=1)
+}
 # Internationalization
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
@@ -116,6 +134,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
+STATIC_ROOT = BASE_DIR/"static"
+
+MEDIA_URL="media/"
+MEDIA_ROOT= BASE_DIR/"media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

@@ -15,7 +15,37 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from django.conf import settings
+from django.conf.urls.static import static
+
+
+
+from Trips_app import views
+
+
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("trip-list/",views.TripListView.as_view()),
+    path("trip-details/<int:trip_id>/",views.TripObjAPIView.as_view()),
+    path("trip-update/<int:trip_id>/",views.TripObjUpdateView.as_view()),
+    path("trip-cancel/<int:trip_id>",views.TripDeleteApiView.as_view()),
+    path("trip-add/",views.TripObjAddView.as_view()),
+    path("register/",views.RegisterUserView.as_view()),
+    path('login/', TokenObtainPairView.as_view()),
+    path('login/refresh/', TokenRefreshView.as_view()),
+  
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL,document_root=settings.STATIC_ROOT)
+    #urlpatterns += media (settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
+
+
+
+
