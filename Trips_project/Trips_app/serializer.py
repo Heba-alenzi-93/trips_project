@@ -24,12 +24,11 @@ class UserRegisterserializer(serializers.ModelSerializer):
         new_user = User(**validated_data)
         new_user.set_password(password)
         new_user.save()
-        @receiver(post_save, sender=User)
-        def create_profile(sender, instance, created, **kwargs):
-            if created:
-                Profile.objects.create(user=instance)
-
+        Profile.objects.create(user=new_user)
         return validated_data
+  
+
+     
 
 
 # login User
@@ -75,17 +74,29 @@ class TripListSerializer(serializers.ModelSerializer):
 
 class DetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip,Profile
+        model = Trip
         fields = "__all__"
 
 
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip,Profile
+        model = Trip
         fields = "__all__"
 
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip,Profile
+        model = Trip
         fields = "__all__"
+
+
+
+class ProfileDetailSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = "__all__"
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Profile
+        fields = '__all__'
