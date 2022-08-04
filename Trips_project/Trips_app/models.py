@@ -1,6 +1,7 @@
 from distutils.command.upload import upload
 from sys import maxsize
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
@@ -13,3 +14,13 @@ class Trip (models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Profile (models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    bio = models.TextField()
+    profile_pic = models.ImageField(upload_to="avtars/",null=True ,blank=True)
+
+
+    def __str__(self):
+        return str(self.user)

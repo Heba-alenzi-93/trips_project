@@ -39,6 +39,9 @@ urlpatterns = [
     path("register/",views.RegisterUserView.as_view()),
     path('login/', TokenObtainPairView.as_view()),
     path('login/refresh/', TokenRefreshView.as_view()),
+    path("profile-details/<int:profile_id>/",views.ProfileObjAPIView.as_view()),
+     path("profile-update/<int:profile_id>/",views.ProfileObjUpdateView.as_view()),
+    
   
 ]
 

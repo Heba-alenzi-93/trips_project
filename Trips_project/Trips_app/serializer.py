@@ -1,5 +1,6 @@
+from cProfile import Profile
 from rest_framework import serializers
-from .models import Trip
+from .models import Trip,Profile
 from django.contrib.auth import get_user_model
 from rest_framework_simplejwt.tokens import RefreshToken
 
@@ -23,7 +24,10 @@ class UserRegisterserializer(serializers.ModelSerializer):
         new_user = User(**validated_data)
         new_user.set_password(password)
         new_user.save()
-            #create profile
+        @receiver(post_save, sender=User)
+        def create_profile(sender, instance, created, **kwargs):
+            if created:
+                Profile.objects.create(user=instance)
 
         return validated_data
 
@@ -71,17 +75,17 @@ class TripListSerializer(serializers.ModelSerializer):
 
 class DetailSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip
+        model = Trip,Profile
         fields = "__all__"
 
 
 class UpdateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip
+        model = Trip,Profile
         fields = "__all__"
 
 
 class CreateSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Trip
+        model = Trip,Profile
         fields = "__all__"

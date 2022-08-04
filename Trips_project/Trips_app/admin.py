@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Trip
+from .models import Trip, Profile
 
 # Register your models here.
 class TripAdmin(admin.ModelAdmin):
@@ -7,3 +7,4 @@ class TripAdmin(admin.ModelAdmin):
     list_filter = ("title",)
 # Register your models here.
 admin.site.register(Trip,TripAdmin)
+admin.site.register(Profile)
